@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #navbar {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 4%;
+            padding-right: 4%;
+            border: solid 1px black;
+            background-color: whitesmoke;
+            border-radius: 20px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+        }
+
+        .options h3 {
+            padding-left: 30px;
+            padding-right: 10px;
+        }
+
+        #data {
+            width: 40%;
+            margin: auto;
+        }
+
+        #data>img {
+            width: 60%;
+            margin-left: 20%;
+            
+        }
+
+        #data>p {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="navbar">
+        <h3></h3>
+
+        <div class="options">
+            <h3><a href="index.html">recipeByName</a></h3>
+            <h3><a href="RecipeOfTheDay.html">RecipeOfTheDay</a></h3>
+            <h3><a href="latestRecipe.html">latestRecipe</a></h3>
+        </div>
+    </div>
+
+    <h1>Recipe Of the Day</h1>
+
+
+    <div id="data"></div>
+
+</body>
+
+</html>
+
+<script>
+
+    async function SearchRecipe() {
+
+
+
+        let res = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`);
+        let data = await res.json();
+
+        console.log(data);
+        let div = document.getElementById("data");
+        div.innerHTML = null;
+
+        let cetegri = document.createElement("h3");
+        cetegri.innerHTML = `Category: ${data.meals[0].strCategory}`
+
+        let p = document.createElement("p");
+        p.innerHTML = `Recipe :${data.meals[0].strInstructions}`;
+
+        let img = document.createElement("img");
+        img.src = data.meals[0].strMealThumb;
+
+        div.append(cetegri, p, img);
+
+    }
+
+    SearchRecipe();
+
+
+</script>

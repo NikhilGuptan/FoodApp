@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<style>
+    #navbar {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 4%;
+        padding-right: 4%;
+        border: solid 1px black;
+        background-color: whitesmoke;
+        border-radius: 20px;
+    }
+
+    .options {
+        display: flex;
+        justify-content: space-between;
+        list-style: none;
+    }
+
+    .options h3 {
+        padding-left: 30px;
+        padding-right: 10px;
+    }
+
+    #data {
+        width: 90%;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 30%);
+        gap: 3%;
+    }
+    #data>div{
+        /* border: 1px solid black; */
+    }
+
+    #data>div>p {
+        text-align: center;
+    }
+     #data>div>h3 {
+        text-align: center;
+    }
+
+    #data>div>img {
+        width: 80%;
+    }
+</style>
+
+<body>
+
+    <div id="navbar">
+        <h3></h3>
+
+        <div class="options">
+            <h3><a href="index.html">recipeByName</a></h3>
+            <h3><a href="RecipeOfTheDay.html">RecipeOfTheDay</a></h3>
+            <h3><a href="latestRecipe.html">latestRecipe</a></h3>
+        </div>
+    </div>
+
+    <h1>Latest Recipes</h1>
+
+
+    <div id="data"></div>
+
+</body>
+
+</html>
+
+<script>
+
+    async function SearchRecipe() {
+
+
+
+        let res = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        let data = await res.json();
+
+       
+
+        var showRecipe = document.getElementById("data");
+
+        data.categories.forEach((ans) => {
+
+            let div = document.createElement("div");
+
+            let categri = document.createElement("h3");
+            categri.innerHTML = `Category: ${ans.strCategory}`
+
+            let p = document.createElement("p");
+            p.innerHTML = `Category-Description: ${ans.strCategoryDescription}`
+
+            let img = document.createElement("img");
+            img.src = ans.strCategoryThumb;
+
+            div.append(categri, p, img);
+
+            showRecipe.append(div);
+
+
+
+        })
+
+
+    }
+
+    SearchRecipe();
+
+
+</script>
